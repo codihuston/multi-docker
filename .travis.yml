@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+# build a test image of the services that need testing
+before_install:
+  - docker build -t client-test -f ./client/Dockerfile.dev ./client
+  # TODO: build additional images that you want to test here
+
+# test the images
+scripts:
+  # remember, the CI env var is required for react to exit after testing
+  - docker run -e CI=true client-test npm run test -- --coverage
+  # TODO: test any additional images here
+
+# build the images
+# NOTE: the final argument is the context of which to look for a dockerfile
+after_success:
+  - docker build -t client ./client
+  - docker build -t nginx ./nginx
+  - docker build -t server ./server
+  - docker build -t worker ./worker
