@@ -1,0 +1,66 @@
+# NOTES:
+# - If this is your first run, some services may not be prepared by the
+# time that other dependencies are running; just try re-running a 2nd time
+version: '3'
+services:
+  nginx:
+    # https://docs.docker.com/compose/compose-file/
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3050:80"
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: 'redis:latest'
+  api:
+    depends_on:
+      - postgres
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      # do not redirect access to this folder
+      - /app/node_modules
+      # map this host dir to the WORKDIR in the container
+      - ./server:/app
+    # these keys must match in the /server/keys.json;
+    environment:
+      # the name of the service is sufficient enough (docker handles the
+      # network routing)
+      - REDIS_HOST=redis
+      # the default port for redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    # address bug with create-react-app where app closes immediately
+    stdin_open: true
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+        - /app/node_modules
+        - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  worker:
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+        - /app/node_modules
+        - ./worker:/app
