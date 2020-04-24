@@ -16,16 +16,16 @@ scripts:
 # build the images
 # NOTE: the final argument is the context of which to look for a dockerfile
 after_success:
-  - docker build -t codihuston/multi-docker-client ./client
-  - docker build -t codihuston/multi-docker-nginx ./nginx
-  - docker build -t codihuston/multi-docker-server ./server
-  - docker build -t codihuston/multi-docker-worker ./worker
+  - docker build -t cdr95985/multi-docker-client ./client
+  - docker build -t cdr95985/multi-docker-nginx ./nginx
+  - docker build -t cdr95985/multi-docker-server ./server
+  - docker build -t cdr95985/multi-docker-worker ./worker
   # log into docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push to docker hub
-  - docker push codihuston/multi-docker-client
-  - docker push codihuston/multi-docker-nginx
-  - docker push codihuston/multi-docker-server
-  - docker push codihuston/multi-docker-worker
+  - docker push cdr95985/multi-docker-client
+  - docker push cdr95985/multi-docker-nginx
+  - docker push cdr95985/multi-docker-server
+  - docker push cdr95985/multi-docker-worker
 
 # TODO: baton pass to AWS EBS
