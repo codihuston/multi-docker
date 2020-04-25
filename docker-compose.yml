@@ -44,7 +44,7 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
-    # address bug with create-react-app where app closes immediately
+    # address bug with create-react-app where app closes immediately 
     stdin_open: true
     build:
       context: ./client
