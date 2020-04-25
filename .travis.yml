@@ -35,9 +35,9 @@ deploy:
   # sub domain on aws console
   region: us-east-2
   # app name in ebs
-  app: multi-docker
+  app: multi-docker2
   # app environment in ebs
-  env: MultiDocker-env
+  env: MultiDocker2-env
   # s3 bucket for your region
   bucket_name: elasticbeanstalk-us-east-2-072617488360
   bucket_path: docker-multi
