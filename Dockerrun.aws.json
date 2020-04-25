@@ -5,28 +5,24 @@
       "name": "client",
       "image": "codihuston/multi-client",
       "hostname": "client",
-      "essential": false,
-      "memory": 128
+      "essential": false
     },
     {
       "name": "server",
       "image": "codihuston/multi-server",
       "hostname": "api",
-      "essential": false,
-      "memory": 128
+      "essential": false
     },
     {
       "name": "worker",
       "image": "codihuston/multi-worker",
       "hostname": "worker",
-      "essential": false,
-      "memory": 128
+      "essential": false
     },
     {
       "name": "nginx",
       "image": "codihuston/multi-nginx",
       "essential": true,
-      "memory": 128,
       "portMappings": [{
         "hostPort": 80,
         "containerPort": 80
