@@ -28,4 +28,20 @@ after_success:
   - docker push codihuston/multi-docker-server
   - docker push codihuston/multi-docker-worker
 
-# TODO: baton pass to AWS EBS 
+# baton pass to AWS EBS
+deploy:
+  # a travis setting
+  provider: elasticbeanstalk
+  # sub domain on aws console
+  region: us-east-2
+  # app name in ebs
+  app: multi-docker
+  # app environment in ebs
+  env: MultiDocker-env
+  # s3 bucket for your region
+  bucket_name: elasticbeanstalk-us-east-2-072617488360
+  # deploy only on master
+  on:
+    branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
