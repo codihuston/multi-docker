@@ -40,6 +40,7 @@ deploy:
   env: MultiDocker-env
   # s3 bucket for your region
   bucket_name: elasticbeanstalk-us-east-2-072617488360
+  bucket_path: docker-multi
   # deploy only on master
   on:
     branch: master
